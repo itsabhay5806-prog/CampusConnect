@@ -1,8 +1,19 @@
-const API_BASE_URL = (
-  import.meta.env.VITE_API_BASE_URL ||
-  import.meta.env.VITE_API_URL ||
-  '/api/v1'
-).replace(/\/$/, '');
+function resolveApiBaseUrl(): string {
+  const envUrl = import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_URL;
+  if (!envUrl) {
+    return '/api/v1';
+  }
+  const trimmed = envUrl.trim().replace(/\/$/, '');
+  if (trimmed.endsWith('/api/v1')) {
+    return trimmed;
+  }
+  if (trimmed.endsWith('/api')) {
+    return `${trimmed}/v1`;
+  }
+  return `${trimmed}/api/v1`;
+}
+
+const API_BASE_URL = resolveApiBaseUrl();
 
 export interface ApiResponse<T = any> {
   success: boolean;
@@ -30,6 +41,7 @@ export async function apiRequest<T = any>(
   }
 
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+    credentials: options.credentials || 'include',
     ...options,
     headers,
   });

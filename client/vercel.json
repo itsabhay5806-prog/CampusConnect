@@ -1,6 +1,14 @@
 {
   "rewrites": [
     {
+      "source": "/api/:match*",
+      "destination": "https://campus-connect-xdru-eight.vercel.app/api/:match*"
+    },
+    {
+      "source": "/uploads/:match*",
+      "destination": "https://campus-connect-xdru-eight.vercel.app/uploads/:match*"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }

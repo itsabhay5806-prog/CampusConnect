@@ -31,24 +31,44 @@ app.use(
   })
 );
 
+const allowedOrigins = [
+  'https://campus-connect-nu-bay.vercel.app',
+  'https://campus-connect-jade-gamma.vercel.app',
+  ENV.CLIENT_URL,
+  'http://localhost:3000',
+  'http://localhost:5173',
+  'http://127.0.0.1:3000',
+  'http://127.0.0.1:5173',
+];
+
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Allow requests with no origin (like mobile apps, curl, or same-origin)
-      if (
-        !origin ||
-        origin === ENV.CLIENT_URL ||
-        origin.toLowerCase() === ENV.CLIENT_URL.toLowerCase() ||
-        origin.endsWith('.vercel.app') ||
-        origin.includes('localhost') ||
-        origin.includes('127.0.0.1')
-      ) {
-        callback(null, true);
-      } else {
-        callback(null, true); // Permissive in dev/testing
+      // Allow requests with no origin (like mobile apps, curl, server-to-server)
+      if (!origin) {
+        return callback(null, true);
       }
+
+      const normalizedOrigin = origin.toLowerCase().replace(/\/$/, '');
+      const clientUrlNormalized = (ENV.CLIENT_URL || '').toLowerCase().replace(/\/$/, '');
+
+      if (
+        normalizedOrigin === 'https://campus-connect-nu-bay.vercel.app' ||
+        normalizedOrigin === 'https://campus-connect-jade-gamma.vercel.app' ||
+        normalizedOrigin === clientUrlNormalized ||
+        normalizedOrigin.endsWith('.vercel.app') ||
+        normalizedOrigin.includes('localhost') ||
+        normalizedOrigin.includes('127.0.0.1')
+      ) {
+        return callback(null, true);
+      }
+
+      return callback(new Error(`CORS origin not allowed: ${origin}`));
     },
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
+    exposedHeaders: ['Set-Cookie'],
   })
 );
 

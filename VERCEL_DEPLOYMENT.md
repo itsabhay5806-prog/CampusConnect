@@ -37,7 +37,7 @@ In Vercel's **Environment Variables** section, add the following keys:
 | `JWT_EXPIRES_IN` | `7d` | **Required** |
 | `NODE_ENV` | `production` | **Required** |
 | `DEV_OTP_CONSOLE` | `false` | Recommended |
-| `CLIENT_URL` | Your production Vercel URL (e.g. `https://campusconnect-app.vercel.app`) | Recommended |
+| `CLIENT_URL` | Your production Vercel URL (e.g. `https://CampusConnect.vercel.app`) | Recommended |
 | `CLOUDINARY_CLOUD_NAME` | Cloudinary Cloud Name (for persistent media uploads) | Optional |
 | `CLOUDINARY_API_KEY` | Cloudinary API Key | Optional |
 | `CLOUDINARY_API_SECRET` | Cloudinary API Secret | Optional |

@@ -35,7 +35,14 @@ app.use(
   cors({
     origin: (origin, callback) => {
       // Allow requests with no origin (like mobile apps, curl, or same-origin)
-      if (!origin || origin === ENV.CLIENT_URL || origin.includes('localhost') || origin.includes('127.0.0.1')) {
+      if (
+        !origin ||
+        origin === ENV.CLIENT_URL ||
+        origin.toLowerCase() === ENV.CLIENT_URL.toLowerCase() ||
+        origin.endsWith('.vercel.app') ||
+        origin.includes('localhost') ||
+        origin.includes('127.0.0.1')
+      ) {
         callback(null, true);
       } else {
         callback(null, true); // Permissive in dev/testing

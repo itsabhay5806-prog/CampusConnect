@@ -22,10 +22,21 @@ for (const envPath of candidatePaths) {
   }
 }
 
+function sanitizeClientUrl(url?: string): string {
+  if (!url) return 'http://localhost:3000';
+  let cleaned = url.trim();
+  if (/^https?:[^\/]/i.test(cleaned)) {
+    cleaned = cleaned.replace(/^(https?):/i, '$1://');
+  } else if (!/^https?:\/\//i.test(cleaned)) {
+    cleaned = `https://${cleaned}`;
+  }
+  return cleaned.replace(/\/$/, '');
+}
+
 export const ENV = {
   NODE_ENV: process.env.NODE_ENV || 'development',
   PORT: parseInt(process.env.PORT || '5001', 10),
-  CLIENT_URL: process.env.CLIENT_URL || 'http://localhost:3000',
+  CLIENT_URL: sanitizeClientUrl(process.env.CLIENT_URL),
   MONGODB_URI: process.env.MONGODB_URI || '',
   JWT_SECRET: process.env.JWT_SECRET || 'campusconnect_jwt_secret_dev_key_super_safe_123!',
   JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN || '7d',

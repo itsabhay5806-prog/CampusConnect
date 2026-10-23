@@ -29,7 +29,7 @@ Vercel automatically detects `vercel.json`. Verify the following settings:
 - **Framework Preset**: `Vite` (or `Other`)
 - **Root Directory**: `./` (leave blank / root)
 - **Build Command**: `npm run build` (or leave default: Vercel executes `npm run vercel-build`)
-- **Output Directory**: `client/dist`
+- **Output Directory**: `dist` (default)
 - **Install Command**: `npm install` (runs `postinstall` automatically)
 
 ### Step 3: Add Production Environment Variables

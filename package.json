@@ -6,8 +6,9 @@
   "type": "module",
   "scripts": {
     "dev": "concurrently -n \"SERVER,CLIENT\" -c \"blue,green\" \"npm --prefix server run dev\" \"npm --prefix client run dev\"",
-    "build": "npm --prefix server run build && npm --prefix client run build",
-    "vercel-build": "npm --prefix server install && npm --prefix client install && npm --prefix server run build && npm --prefix client run build",
+    "build:sync": "node -e \"const fs=require('fs'); if(fs.existsSync('client/dist')){fs.rmSync('dist',{recursive:true,force:true});fs.cpSync('client/dist','dist',{recursive:true});}\"",
+    "build": "npm --prefix server run build && npm --prefix client run build && npm run build:sync",
+    "vercel-build": "npm --prefix server install && npm --prefix client install && npm --prefix server run build && npm --prefix client run build && npm run build:sync",
     "postinstall": "npm --prefix server install && npm --prefix client install",
     "seed": "npm --prefix server run seed",
     "test": "npm --prefix server test && npm --prefix client test"

@@ -3,7 +3,7 @@ import { Conversation } from '../models/Conversation.js';
 import { Message } from '../models/Message.js';
 import { User } from '../models/User.js';
 import { AuthenticatedRequest } from '../middleware/auth.js';
-import { io } from '../index.js';
+import { getIO } from '../socket/socketHandler.js';
 
 export async function getConversations(req: AuthenticatedRequest, res: Response, next: NextFunction) {
   try {
@@ -189,6 +189,7 @@ export async function sendMessage(req: AuthenticatedRequest, res: Response, next
     const populated = await Message.findById(message._id).populate('sender', 'name avatarUrl');
 
     // Emit Socket.IO event to room if configured
+    const io = getIO();
     if (io) {
       io.to(`conversation_${conv._id}`).emit('new_message', {
         ...populated?.toObject(),

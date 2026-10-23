@@ -31,14 +31,23 @@ export function SocketProvider({ children }: { children: React.ReactNode }) {
       return;
     }
 
-    const socketInstance = io('/', {
+    const socketEndpoint =
+      import.meta.env.VITE_SOCKET_URL ||
+      (import.meta.env.VITE_API_URL ? new URL(import.meta.env.VITE_API_URL).origin : '/');
+
+    const socketInstance = io(socketEndpoint, {
       auth: { token },
       transports: ['websocket', 'polling'],
-      reconnectionAttempts: 5,
+      reconnectionAttempts: 3,
+      timeout: 5000,
     });
 
     socketInstance.on('connect', () => {
       setIsConnected(true);
+    });
+
+    socketInstance.on('connect_error', () => {
+      setIsConnected(false);
     });
 
     socketInstance.on('disconnect', () => {

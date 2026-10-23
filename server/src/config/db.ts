@@ -37,7 +37,7 @@ export async function connectDB(): Promise<string> {
     return uri;
   } catch (error) {
     console.error('❌ MongoDB connection error:', error);
-    process.exit(1);
+    throw error;
   }
 }
 

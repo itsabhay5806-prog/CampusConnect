@@ -22,10 +22,17 @@ if (isCloudinaryConfigured) {
   console.log('ℹ️  Cloudinary credentials not detected. Falling back to local disk storage (/uploads).');
 }
 
-// Ensure local uploads directory exists
-const uploadsDir = path.resolve(process.cwd(), 'uploads');
-if (!fs.existsSync(uploadsDir)) {
-  fs.mkdirSync(uploadsDir, { recursive: true });
+// Ensure local uploads directory exists (use /tmp on Vercel serverless)
+const uploadsDir = process.env.VERCEL
+  ? path.join('/tmp', 'uploads')
+  : path.resolve(process.cwd(), 'uploads');
+
+try {
+  if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir, { recursive: true });
+  }
+} catch {
+  // Graceful fallback if read-only
 }
 
 // Multer disk storage for receiving incoming files

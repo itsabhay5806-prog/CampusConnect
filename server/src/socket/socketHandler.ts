@@ -9,7 +9,10 @@ interface AuthenticatedSocket extends Socket {
   userId?: string;
 }
 
+let ioInstance: SocketIOServer | null = null;
+
 export function initSocket(io: SocketIOServer) {
+  ioInstance = io;
   // Authentication middleware for Socket.IO
   io.use((socket: AuthenticatedSocket, next) => {
     const token = socket.handshake.auth?.token || socket.handshake.headers?.authorization?.split(' ')[1];
@@ -79,3 +82,8 @@ export function initSocket(io: SocketIOServer) {
     });
   });
 }
+
+export function getIO(): SocketIOServer | null {
+  return ioInstance;
+}
+

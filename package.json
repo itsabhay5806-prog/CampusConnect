@@ -3,13 +3,34 @@
   "version": "1.0.0",
   "description": "CampusConnect - A Verified, Student-Driven Digital Campus Ecosystem",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "concurrently -n \"SERVER,CLIENT\" -c \"blue,green\" \"npm --prefix server run dev\" \"npm --prefix client run dev\"",
     "build": "npm --prefix server run build && npm --prefix client run build",
+    "vercel-build": "npm --prefix server install && npm --prefix client install && npm --prefix server run build && npm --prefix client run build",
+    "postinstall": "npm --prefix server install && npm --prefix client install",
     "seed": "npm --prefix server run seed",
     "test": "npm --prefix server test && npm --prefix client test"
   },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cloudinary": "^2.5.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.9.5",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.10.0",
+    "socket.io": "^4.8.1",
+    "zod": "^3.24.1"
+  },
   "devDependencies": {
+    "@types/node": "^22.10.7",
+    "@vercel/node": "^5.1.10",
     "concurrently": "^9.1.2"
   }
 }

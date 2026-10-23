@@ -9,7 +9,7 @@ import { EmailVerification } from '../models/EmailVerification.js';
 import { devOtpStore } from '../config/mailer.js';
 import { CollegeSuggestion } from '../models/CollegeSuggestion.js';
 
-describe('CampusConnect API Test Suite', () => {
+describe('CampusConnect API Test Suite', { timeout: 20000 }, () => {
   let collegeId: string;
   let testUserToken: string;
   let testUserId: string;

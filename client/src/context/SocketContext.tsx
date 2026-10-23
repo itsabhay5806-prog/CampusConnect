@@ -33,7 +33,11 @@ export function SocketProvider({ children }: { children: React.ReactNode }) {
 
     const socketEndpoint =
       import.meta.env.VITE_SOCKET_URL ||
-      (import.meta.env.VITE_API_URL ? new URL(import.meta.env.VITE_API_URL).origin : '/');
+      (import.meta.env.VITE_API_BASE_URL && import.meta.env.VITE_API_BASE_URL.startsWith('http')
+        ? new URL(import.meta.env.VITE_API_BASE_URL).origin
+        : import.meta.env.VITE_API_URL && import.meta.env.VITE_API_URL.startsWith('http')
+        ? new URL(import.meta.env.VITE_API_URL).origin
+        : '/');
 
     const socketInstance = io(socketEndpoint, {
       auth: { token },

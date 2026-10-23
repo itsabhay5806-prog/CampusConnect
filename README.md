@@ -151,10 +151,24 @@ npm --prefix client test
 
 ---
 
+## ☁️ Vercel Deployment
+
+CampusConnect is configured for 1-click monorepo deployment on **Vercel** with full-stack support:
+
+- **Frontend**: High-speed React SPA built with Vite and TailwindCSS served from Vercel's global Edge Network.
+- **Backend**: Express API deployed as a Vercel Serverless Function via [`api/index.ts`](file:///Users/abhayverma/.gemini/antigravity/scratch/campusconnect/api/index.ts) with on-demand MongoDB Atlas connection pooling.
+- **SPA Routing**: Automatic rewrite configuration in [`vercel.json`](file:///Users/abhayverma/.gemini/antigravity/scratch/campusconnect/vercel.json) prevents 404s on browser refreshes.
+
+See the complete step-by-step instructions in [**`DEPLOYMENT.md`**](file:///Users/abhayverma/.gemini/antigravity/scratch/campusconnect/DEPLOYMENT.md).
+
+---
+
 ## 📁 Project Structure
 
 ```
 campusconnect/
+├── api/                         # Vercel Serverless Function entrypoint
+│   └── index.ts                 # Express serverless handler with MongoDB pooling
 ├── client/                      # React 18 + Vite + TypeScript frontend
 │   ├── src/
 │   │   ├── components/          # Reusable UI cards, modals, skeletons
@@ -165,7 +179,7 @@ campusconnect/
 │   │   │   ├── app/             # Feed, Discover, Resources, LostFound,
 │   │   │   │                    # Communities, Projects, Messages, Profile...
 │   │   │   └── auth/            # Login, Register, VerifyEmail, Onboarding...
-│   │   ├── services/            # Typed API fetch client
+│   │   ├── services/            # Typed API fetch client with VITE_API_BASE_URL
 │   │   └── test/                # Vitest & RTL test specs
 │   └── vite.config.ts           # Proxy config to Express backend
 ├── server/                      # Node.js + Express + TypeScript backend
@@ -173,13 +187,15 @@ campusconnect/
 │   │   ├── config/              # DB, Mailer, Upload, Env configuration
 │   │   ├── controllers/         # Auth, Post, Resource, LostFound, Project...
 │   │   ├── middleware/          # JWT Auth, RBAC roles, rate limiting
-│   │   ├── models/              # 19 Mongoose Schemas with indexes & references
+│   │   ├── models/              # Mongoose Schemas with indexes & references
 │   │   ├── routes/              # Express API v1 route definitions
 │   │   ├── socket/              # Socket.IO connection & room handler
 │   │   ├── seed.ts              # Database seeding script with realistic data
 │   │   └── tests/               # Backend API test suite
-├── .env.example                 # Documented environment variables
+├── .env.example                 # Global environment variables template
 ├── API_DOCUMENTATION.md         # Full REST API endpoint specifications
+├── DEPLOYMENT.md                # Vercel & Production deployment guide
+├── vercel.json                  # Vercel SPA rewrites & serverless routing config
 └── package.json                 # Monorepo scripts (dev, build, seed, test)
 ```
 

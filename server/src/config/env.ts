@@ -46,12 +46,12 @@ export const ENV = {
   CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY || '',
   CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET || '',
 
-  // SMTP Email
-  SMTP_HOST: process.env.SMTP_HOST || '',
-  SMTP_PORT: parseInt(process.env.SMTP_PORT || '587', 10),
-  SMTP_USER: process.env.SMTP_USER || '',
-  SMTP_PASS: process.env.SMTP_PASS || '',
-  EMAIL_FROM: process.env.EMAIL_FROM || 'noreply@campusconnect.edu',
+  // SMTP / Email Configuration
+  SMTP_HOST: process.env.SMTP_HOST || process.env.EMAIL_HOST || '',
+  SMTP_PORT: parseInt(process.env.SMTP_PORT || process.env.EMAIL_PORT || '587', 10),
+  SMTP_USER: process.env.SMTP_USER || process.env.EMAIL_USER || '',
+  SMTP_PASS: process.env.SMTP_PASS || process.env.EMAIL_PASS || '',
+  EMAIL_FROM: process.env.EMAIL_FROM || process.env.EMAIL_USER || 'noreply@campusconnect.edu',
 
   // Dev mode bypass for OTP inspection
   DEV_OTP_CONSOLE: process.env.DEV_OTP_CONSOLE !== 'false',

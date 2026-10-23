@@ -70,6 +70,21 @@ export const App: React.FC = () => {
                 <Route path="moderation" element={<ModerationPage />} />
               </Route>
 
+              {/* Convenience Direct Aliases */}
+              <Route path="/dashboard" element={<Navigate to="/app/feed" replace />} />
+              <Route path="/feed" element={<Navigate to="/app/feed" replace />} />
+              <Route path="/discover" element={<Navigate to="/app/discover" replace />} />
+              <Route path="/resources" element={<Navigate to="/app/resources" replace />} />
+              <Route path="/projects" element={<Navigate to="/app/projects" replace />} />
+              <Route path="/communities" element={<Navigate to="/app/communities" replace />} />
+              <Route path="/lost-found" element={<Navigate to="/app/lost-found" replace />} />
+              <Route path="/messages" element={<Navigate to="/app/messages" replace />} />
+              <Route path="/notifications" element={<Navigate to="/app/notifications" replace />} />
+              <Route path="/saved" element={<Navigate to="/app/saved" replace />} />
+              <Route path="/profile" element={<Navigate to="/app/profile" replace />} />
+              <Route path="/settings" element={<Navigate to="/app/settings" replace />} />
+              <Route path="/moderation" element={<Navigate to="/app/moderation" replace />} />
+
               {/* Fallback */}
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
